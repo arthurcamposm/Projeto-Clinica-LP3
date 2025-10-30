@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.clinicafx.controller.FormularioPacienteController">
+    <children>
+        <Label layoutX="36.0" layoutY="32.0" text="Cadastro de Paciente">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="36.0" layoutY="88.0" text="Nome Completo:" />
+        <TextField fx:id="txtNome" layoutX="143.0" layoutY="84.0" prefWidth="420.0" />
+        <Label layoutX="36.0" layoutY="129.0" text="CPF:" />
+        <TextField fx:id="txtCpf" layoutX="143.0" layoutY="125.0" promptText="Somente números" />
+        <Label layoutX="302.0" layoutY="129.0" text="Data Nasc.:" />
+        <DatePicker fx:id="datePickerNascimento" layoutX="375.0" layoutY="125.0" prefWidth="188.0" />
+        <Label layoutX="36.0" layoutY="170.0" text="CEP:" />
+        <TextField fx:id="txtCep" layoutX="143.0" layoutY="166.0" promptText="Somente números" />
+        <Label layoutX="36.0" layoutY="211.0" text="Senha:" />
+        <PasswordField fx:id="txtSenha" layoutX="143.0" layoutY="207.0" />
+
+        <Button fx:id="btnSalvar" layoutX="506.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleSalvarButtonAction" prefWidth="60.0" text="Salvar" />
+        <Button fx:id="btnCancelar" layoutX="426.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleCancelarButtonAction" prefWidth="70.0" text="Cancelar" />
+
+        <Separator layoutX="35.0" layoutY="310.0" prefWidth="530.0" />
+        <Label layoutX="35.0" layoutY="280.0" text="Buscar Paciente (Leitura)">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="36.0" layoutY="340.0" text="Buscar por CPF:" />
+        <TextField fx:id="txtBuscaCpf" layoutX="136.0" layoutY="336.0" promptText="Somente números" />
+        <Button fx:id="btnBuscar" layoutX="302.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleBuscarButtonAction" text="Buscar" />
+        <Label fx:id="lblStatus" layoutX="36.0" layoutY="405.0" prefHeight="17.0" prefWidth="378.0" textFill="RED" />
+    </children>
+</AnchorPane>

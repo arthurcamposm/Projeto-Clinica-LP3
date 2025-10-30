@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.clinicafx.controller.LoginController">
+    <children>
+        <Label layoutX="148.0" layoutY="38.0" text="Login ClinicaFX">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtCpf" layoutX="126.0" layoutY="103.0" promptText="CPF" />
+        <PasswordField fx:id="txtSenha" layoutX="126.0" layoutY="150.0" promptText="Senha" />
+        <Button fx:id="btnLogin" layoutX="175.0" layoutY="207.0" onAction="#handleLoginButtonAction" text="Entrar" />
+        <Label fx:id="lblStatus" layoutX="126.0" layoutY="258.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
+        <Label layoutX="88.0" layoutY="107.0" text="CPF:" />
+        <Label layoutX="78.0" layoutY="154.0" text="Senha:" />
+    </children>
+</AnchorPane>
