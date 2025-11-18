@@ -1,11 +1,11 @@
-package org.example.clinicafx; // Ou o seu pacote principal
+package org.example.clinicafx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.clinicafx.util.ConexaoMySQL; // Importe sua classe de conexão
+import org.example.clinicafx.util.ConexaoMySQL;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class Main extends Application {
             ConexaoMySQL.getConexao();
 
             // 2. Carrega a primeira tela (Login.fxml)
-            // Certifique-se que o Login.fxml está em 'src/main/resources/com/example/clinicafx/'
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Parent root = loader.load();
 
@@ -36,13 +36,6 @@ public class Main extends Application {
             System.err.println("Erro geral ao iniciar a aplicação:");
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void stop() {
-        // 3. Fecha a conexão com o banco ao fechar o app
-        System.out.println("Fechando aplicação...");
-        ConexaoMySQL.fecharConexao();
     }
 
     public static void main(String[] args) {

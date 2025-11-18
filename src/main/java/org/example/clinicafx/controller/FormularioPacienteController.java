@@ -33,10 +33,7 @@ public class FormularioPacienteController {
     // Armazena o paciente encontrado na busca (para atualização futura)
     private Paciente pacienteAtual = null;
 
-    /**
-     * (Req 6.3 - Gravação)
-     * Pega os dados do formulário, cria um objeto Paciente e o salva no BD.
-     */
+
     @FXML
     void handleSalvarButtonAction(ActionEvent event) {
         try {
@@ -45,13 +42,15 @@ public class FormularioPacienteController {
             String cpf = txtCpf.getText();
             LocalDate dataNasc = datePickerNascimento.getValue();
             String cep = txtCep.getText();
-            String senha = txtSenha.getText(); // Em um app real, use HASH!
+            String senha = txtSenha.getText();
 
             // Validação simples
             if (nome.isEmpty() || cpf.isEmpty() || senha.isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Erro", "Campos obrigatórios (Nome, CPF, Senha) não podem estar vazios.");
                 return;
             }
+
+
 
             // 2. Criar objeto Paciente
             Paciente paciente = new Paciente(nome, dataNasc, cpf, cep, senha);
@@ -78,10 +77,7 @@ public class FormularioPacienteController {
         }
     }
 
-    /**
-     * (Req 6.3 - Leitura)
-     * Busca um paciente no BD pelo CPF e preenche os campos do formulário.
-     */
+
     @FXML
     void handleBuscarButtonAction(ActionEvent event) {
         String cpf = txtBuscaCpf.getText();

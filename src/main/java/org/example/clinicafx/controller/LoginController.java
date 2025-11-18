@@ -1,5 +1,7 @@
-package org.example.clinicafx.controller; // Pacote 'controller'
+package org.example.clinicafx.controller;
 
+import org.example.clinicafx.dao.UsuarioDAO; // IMPORTAR O DAO
+import org.example.clinicafx.model.Usuario;   // IMPORTAR O MODEL
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,23 +14,18 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-// import com.example.clinicafx.dao.UsuarioDAO; // Vamos precisar disso em breve
-
 public class LoginController {
 
-    @FXML
-    private TextField txtCpf;
+    @FXML private TextField txtCpf;
+    @FXML private PasswordField txtSenha;
+    @FXML private Button btnLogin;
+    @FXML private Label lblStatus;
 
-    @FXML
-    private PasswordField txtSenha;
+    // Instancia o DAO para o login
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    @FXML
-    private Button btnLogin;
-
-    @FXML
-    private Label lblStatus;
-
-    // private UsuarioDAO usuarioDAO = new UsuarioDAO(); // Descomente quando criar o DAO
+    // (Opcional) Guarda quem está logado
+    public static Usuario usuarioLogado;
 
     @FXML
     void handleLoginButtonAction(ActionEvent event) {
@@ -40,31 +37,26 @@ public class LoginController {
             return;
         }
 
-        // --- LÓGICA DE LOGIN ---
-        // (Ainda simulado. Substitua por 'usuarioDAO.validarLogin(cpf, senha)' no futuro)
-        boolean loginValido = true;
+        // --- LÓGICA DE LOGIN REAL ---
+        Usuario usuario = usuarioDAO.validarLogin(cpf, senha);
+        boolean loginValido = (usuario != null);
 
         if (loginValido) {
-            lblStatus.setText("Login com sucesso!");
+            usuarioLogado = usuario; // Guarda o usuário logado
+            lblStatus.setText("Login com sucesso! Bem-vindo, " + usuario.getNomeCompleto());
             System.out.println("Login bem-sucedido, carregando painel principal...");
 
             try {
-                // Pega o "palco" (janela) atual do login
                 Stage stageLogin = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                // Carrega o FXML do Dashboard
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/clinicafx/Dashboard.fxml"));
                 Parent root = loader.load();
 
-                // Cria um novo "palco" (janela) para o Dashboard
                 Stage stageDashboard = new Stage();
                 stageDashboard.setTitle("Painel Principal - ClinicaFX");
                 stageDashboard.setScene(new Scene(root));
-
-                // Exibe o Dashboard
                 stageDashboard.show();
 
-                // Fecha a janela de login
                 stageLogin.close();
 
             } catch (Exception e) {
