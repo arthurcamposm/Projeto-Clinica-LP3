@@ -9,22 +9,22 @@
     <top>
         <MenuBar prefHeight="35.0" prefWidth="800.0" style="-fx-background-color: #24243e;" stylesheets="@styles.css" BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="Cadastros">
+                <Menu mnemonicParsing="false" onAction="#handleMenuCadastrarMedico" text="Cadastros">
                     <items>
                         <MenuItem fx:id="menuItemCadPaciente" mnemonicParsing="false" onAction="#handleMenuCadastrarPaciente" text="Paciente" />
                         <MenuItem mnemonicParsing="false" text="Médico" />
-                        <MenuItem mnemonicParsing="false" text="Plano de Saúde" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuCadastrarPlano" text="Plano de Saúde" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Agendamento">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Agendar Consulta" />
-                        <MenuItem mnemonicParsing="false" text="Visualizar Agenda" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuAgendarConsulta" text="Agendar Consulta" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuVisualizarAgenda" text="Visualizar Agenda" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ajuda">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Sobre" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSobre" text="Sobre" />
                     </items>
                 </Menu>
             </menus>
