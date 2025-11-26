@@ -1,0 +1,21 @@
+.menu .label {
+	-fx-text-fill: #e5e5e5;
+	-fx-font-family: "Zen Kaku Gothic Antique";
+	-fx-font-size: 18px;
+	}
+
+.menu-item .label {
+	-fx-text-fill: #24243e;
+	-fx-font-family: "Zen Kaku Gothic Antique";
+	-fx-font-size: 16px;
+}
+
+/* * Estilo para o menu (ex: "Cadastros") QUANDO:
+ * 1. O mouse está em cima (.menu:hover)
+ * 2. O menu está aberto e mostrando os sub-itens (.menu:showing)
+ */
+.menu:hover,
+.menu:showing {
+    -fx-background-color: #151536; /* Seu fundo escuro */
+}
+
