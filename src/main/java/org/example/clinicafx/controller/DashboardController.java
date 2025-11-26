@@ -6,14 +6,48 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import org.example.clinicafx.dao.ConsultaDAO;
+import org.example.clinicafx.dao.MedicoDAO;
+import org.example.clinicafx.dao.PacienteDAO;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DashboardController {
+public class DashboardController implements Initializable {
 
+    // Labels do Dashboard (Stats)
+    @FXML private Label lblTotalPacientes;
+    @FXML private Label lblTotalMedicos;
+    @FXML private Label lblTotalConsultas;
+
+    // DAOs
+    private final PacienteDAO pacienteDAO = new PacienteDAO();
+    private final MedicoDAO medicoDAO = new MedicoDAO();
+    private final ConsultaDAO consultaDAO = new ConsultaDAO();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Carrega os dados assim que a tela abre
+        atualizarDashboard(null);
+    }
+
+    @FXML
+    void atualizarDashboard(ActionEvent event) {
+        // Busca os totais no banco e atualiza as Labels
+        int totalPacientes = pacienteDAO.contar();
+        int totalMedicos = medicoDAO.contar();
+        int totalConsultas = consultaDAO.contar();
+
+        if (lblTotalPacientes != null) lblTotalPacientes.setText(String.valueOf(totalPacientes));
+        if (lblTotalMedicos != null) lblTotalMedicos.setText(String.valueOf(totalMedicos));
+        if (lblTotalConsultas != null) lblTotalConsultas.setText(String.valueOf(totalConsultas));
+    }
     @FXML
     private MenuItem menuItemCadPaciente;
 

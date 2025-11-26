@@ -14,10 +14,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // 1. Tenta conectar ao banco de dados ao iniciar
+            // Tenta conectar ao banco de dados ao iniciar
             ConexaoMySQL.getConexao();
 
-            // 2. Carrega a primeira tela (Login.fxml)
+            // Carrega a primeira tela (Login.fxml)
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Parent root = loader.load();
@@ -26,7 +26,7 @@ public class Main extends Application {
 
             primaryStage.setTitle("ClinicaFX - Sistema de Agendamento");
             primaryStage.setScene(scene);
-            primaryStage.setResizable(false); // Opcional: impede redimensionar
+            primaryStage.setResizable(false);
             primaryStage.show();
 
         } catch (IOException e) {

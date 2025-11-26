@@ -31,12 +31,33 @@ public class AgendaController implements Initializable {
     }
 
     private void configurarColunas() {
-        // Mapeia colunas simples
-        colData.setCellValueFactory(new PropertyValueFactory<>("dataConsulta"));
-        colHora.setCellValueFactory(new PropertyValueFactory<>("horarioConsulta"));
-        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        // --- Configurar DATA (Com formatação BR) ---
+        // Cria um formatador de dia/mês/ano
+        java.time.format.DateTimeFormatter formatoData = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        // Mapeia colunas complexas (objetos dentro de objetos)
+        colData.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getDataConsulta() != null) {
+                // Pega a data, formata para String e devolve para a tabela
+                return new SimpleStringProperty(cellData.getValue().getDataConsulta().format(formatoData));
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
+
+        // --- Configurar HORA ---
+        colHora.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getHorarioConsulta() != null) {
+                return new SimpleStringProperty(cellData.getValue().getHorarioConsulta().toString());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
+
+        // --- Configurar ESTADO ---
+        colEstado.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getEstado()));
+
+        // --- Configurar PACIENTE e MÉDICO (Como já estava) ---
         colPaciente.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getPaciente().getNomeCompleto()));
 

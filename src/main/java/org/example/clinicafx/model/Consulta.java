@@ -28,6 +28,7 @@ public class Consulta {
         this.valorConsulta = valorConsulta;
     }
 
+
     // --- Getters e Setters ---
 
     public int getId() {

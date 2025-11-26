@@ -1,0 +1,29 @@
+=== INSTRUÇÕES DE EXECUÇÃO - CLINICAFX ===
+Alunos: Arthur de Mattos Campos e Yuri Lopes Gomes Alves
+Disciplina: Linguagem de Programação III
+
+PRÉ-REQUISITOS:
+1. Java JDK 17 ou superior instalado.
+2. MySQL Server 8.0 instalado e rodando.
+3. IntelliJ IDEA ou NetBeans.
+
+PASSO 1: CONFIGURAR O BANCO DE DADOS
+1. Encontre o arquivo "database_clinicafx.sql" na pasta raiz deste projeto (ou na pasta 'sql').
+2. Abra o MySQL Workbench ou seu cliente SQL preferido.
+3. Vá em "File > Open SQL Script" e selecione o arquivo.
+4. Execute o script completo (ícone de raio).
+   * Isso criará o banco 'ClinicaFX', todas as tabelas e inserirá o usuário administrador.
+
+PASSO 2: CONFIGURAR A CONEXÃO JAVA
+1. Abra o projeto na sua IDE.
+2. Navegue até o arquivo: src/main/java/org/example/clinicafx/util/ConexaoMySQL.java
+3. Verifique as linhas de credenciais:
+   private static final String USER = "root";
+   private static final String PASSWORD = "SUA_SENHA_AQUI";
+4. Por favor, altere a variável PASSWORD para a senha do seu MySQL local.
+
+PASSO 3: EXECUTAR
+1. Execute a classe Main.java.
+2. Para logar, utilize o usuário de teste já cadastrado pelo script:
+   CPF: 123
+   Senha: 123

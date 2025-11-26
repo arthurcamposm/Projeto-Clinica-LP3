@@ -15,13 +15,14 @@ public class MedicoDAO {
     public void salvar(Medico medico) {
         String sqlUsuario = "INSERT INTO Usuario (nomeCompleto, dataNascimento, cpf, cep, senha) VALUES (?, ?, ?, ?, ?)";
         String sqlMedico = "INSERT INTO Medico (usuario_id, crm) VALUES (?, ?)";
+        String sqlVinculo = "INSERT INTO Medico_Especialidade (medico_id, especialidade_id) VALUES (?, ?)";
 
         try (Connection conexao = ConexaoMySQL.getConexao()) {
             conexao.setAutoCommit(false); // Inicia Transação
 
             int usuarioId = -1;
 
-            // 1. Salva o Usuario
+            // Salva o Usuario
             try (PreparedStatement psUsuario = conexao.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
                 psUsuario.setString(1, medico.getNomeCompleto());
                 if (medico.getDataNascimento() != null) {
@@ -42,11 +43,23 @@ public class MedicoDAO {
                 }
             }
 
-            // 2. Salva o Médico (Vinculando pelo ID)
+            // Salva o Médico (Vinculando pelo ID)
             try (PreparedStatement psMedico = conexao.prepareStatement(sqlMedico)) {
                 psMedico.setInt(1, usuarioId);
                 psMedico.setString(2, medico.getCrm());
                 psMedico.executeUpdate();
+            }
+
+            // Salva a Especialidade (se houver alguma selecionada)
+            if (!medico.getEspecialidades().isEmpty()) {
+                try (PreparedStatement psVinculo = conexao.prepareStatement(sqlVinculo)) {
+                    // Pegamos a primeira especialidade da lista para salvar
+                    int especialidadeId = medico.getEspecialidades().get(0).getId();
+
+                    psVinculo.setInt(1, usuarioId);
+                    psVinculo.setInt(2, especialidadeId);
+                    psVinculo.executeUpdate();
+                }
             }
 
             conexao.commit(); // Confirma
@@ -151,5 +164,15 @@ public class MedicoDAO {
             System.err.println("Erro ao listar médicos: " + e.getMessage());
         }
         return medicos;
+    }
+
+    public int contar() {
+        String sql = "SELECT COUNT(*) FROM Medico";
+        try (Connection conn = ConexaoMySQL.getConexao();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) { e.printStackTrace(); }
+        return 0;
     }
 }

@@ -9,13 +9,13 @@ public class Medico extends Usuario {
     private List<Especialidade> especialidades;
     private Agenda agenda;
 
-    // Construtor vazio
+
     public Medico() {
         super();
         this.especialidades = new ArrayList<>();
     }
 
-    // Construtor parametrizado
+
     public Medico(String nomeCompleto, LocalDate dataNascimento, String cpf, String cep, String senha, String crm) {
         super(nomeCompleto, dataNascimento, cpf, cep, senha);
         this.crm = crm;

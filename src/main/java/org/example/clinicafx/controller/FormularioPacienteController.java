@@ -27,17 +27,24 @@ public class FormularioPacienteController {
     @FXML private Button btnBuscar;
     @FXML private Label lblStatus;
 
-    // Instancia o DAO para falar com o banco
+    // Variável de controle
+    private boolean salvo = false;
+
+    // Método para outros controllers saberem se deu certo
+    public boolean isSalvo() {
+        return salvo;
+    }
+
     private final PacienteDAO pacienteDAO = new PacienteDAO();
 
-    // Armazena o paciente encontrado na busca (para atualização futura)
+
     private Paciente pacienteAtual = null;
 
 
     @FXML
     void handleSalvarButtonAction(ActionEvent event) {
         try {
-            // 1. Coletar dados do formulário
+            // Coletar dados do formulário
             String nome = txtNome.getText();
             String cpf = txtCpf.getText();
             LocalDate dataNasc = datePickerNascimento.getValue();
@@ -52,22 +59,25 @@ public class FormularioPacienteController {
 
 
 
-            // 2. Criar objeto Paciente
+            // Criar objeto Paciente
             Paciente paciente = new Paciente(nome, dataNasc, cpf, cep, senha);
 
-            // 3. Chamar o DAO para salvar
+            // Chamar o DAO para salvar
             // Se o pacienteAtual existe, significa que estamos atualizando
             if(pacienteAtual != null) {
                 paciente.setId(pacienteAtual.getId());
                 pacienteDAO.atualizar(paciente);
+                showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Paciente atualizado!");
                 lblStatus.setText("Paciente atualizado com sucesso!");
             } else {
                 // Se não, estamos criando um novo
                 pacienteDAO.salvar(paciente);
+                this.salvo = true;
+                showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Paciente salvo com sucesso!");
                 lblStatus.setText("Paciente salvo com sucesso!");
             }
 
-            // 4. Limpar o formulário e fechar a janela
+            // Limpar o formulário e fechar a janela
             limparCampos();
             handleCancelarButtonAction(event); // Fecha a janela
 
@@ -89,13 +99,12 @@ public class FormularioPacienteController {
         Paciente paciente = pacienteDAO.buscarPorCpf(cpf);
 
         if (paciente != null) {
-            // (Leitura) Preenche o formulário com os dados do BD
-            pacienteAtual = paciente; // Armazena o paciente encontrado
+            pacienteAtual = paciente;
             txtNome.setText(paciente.getNomeCompleto());
             txtCpf.setText(paciente.getCpf());
             datePickerNascimento.setValue(paciente.getDataNascimento());
             txtCep.setText(paciente.getCep());
-            txtSenha.setText(""); // Senha nunca deve ser exibida
+            txtSenha.setText("");
             lblStatus.setText("Paciente encontrado. Você pode editar e salvar.");
         } else {
             showAlert(Alert.AlertType.INFORMATION, "Não encontrado", "Nenhum paciente encontrado com o CPF informado.");
@@ -105,7 +114,6 @@ public class FormularioPacienteController {
 
     @FXML
     void handleCancelarButtonAction(ActionEvent event) {
-        // Pega o "palco" (janela) atual a partir do botão e fecha
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }

@@ -1,4 +1,4 @@
-package org.example.clinicafx.model; // Pacote 'model'
+package org.example.clinicafx.model;
 
 import java.time.LocalDate;
 

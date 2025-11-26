@@ -1,7 +1,8 @@
 package org.example.clinicafx.controller;
 
-import org.example.clinicafx.dao.UsuarioDAO; // IMPORTAR O DAO
-import org.example.clinicafx.model.Usuario;   // IMPORTAR O MODEL
+import javafx.stage.Modality;
+import org.example.clinicafx.dao.UsuarioDAO;
+import org.example.clinicafx.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML private TextField txtCpf;
@@ -24,7 +27,7 @@ public class LoginController {
     // Instancia o DAO para o login
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    // (Opcional) Guarda quem está logado
+    // Guarda quem está logado
     public static Usuario usuarioLogado;
 
     @FXML
@@ -66,6 +69,37 @@ public class LoginController {
 
         } else {
             lblStatus.setText("CPF ou Senha inválidos.");
+        }
+    }
+
+    @FXML
+    void handleCadastreSe(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/clinicafx/FormularioPaciente.fxml"));
+            Parent root = loader.load();
+
+            // Pegamos a instância do Controller que o FXMLLoader criou
+            FormularioPacienteController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Novo Cadastro - Paciente");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            // O código para aqui e espera a janela fechar
+            stage.showAndWait();
+
+            // Agora verificamos: O usuário salvou ou só fechou a janela?
+            if (controller.isSalvo()) {
+                lblStatus.setText("Cadastro realizado! Tente logar agora.");
+                lblStatus.setStyle("-fx-text-fill: green;"); // Opcional: deixa verde
+            } else {
+                // Se cancelou, apenas limpamos o status ou não fazemos nada
+                lblStatus.setText("");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
